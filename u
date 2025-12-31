@@ -1,1 +1,91 @@
+-- [UI]
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local PlayerGui = player:WaitForChild("PlayerGui")
 
+-- ===== REMOVE OLD UI =====
+if PlayerGui:FindFirstChild("MacroUI") then
+    PlayerGui.MacroUI:Destroy()
+end
+
+-- ===== CREATE NEW UI =====
+local gui = Instance.new("ScreenGui")
+gui.Name = "MacroUI"
+gui.ResetOnSpawn = false
+gui.Parent = PlayerGui
+
+-- ===== Main Frame =====
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 220, 0, 120)
+frame.Position = UDim2.new(0.215, 0, 0.85, 00)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+
+-- ===== UI Corner =====
+local corner = Instance.new("UICorner", frame)
+corner.CornerRadius = UDim.new(0, 12)
+
+-- ===== Title =====
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 30)
+title.BackgroundTransparency = 1
+title.Text = "🎥 Macro Recorder"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 14
+title.Parent = frame
+
+-- ===== Status Label =====
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1, 0, 0, 20)
+status.Position = UDim2.new(0, 0, 0, 30)
+status.BackgroundTransparency = 1
+status.Text = "STATUS | STOP"
+status.TextColor3 = Color3.fromRGB(200, 200, 200)
+status.Font = Enum.Font.Gotham
+status.TextSize = 14
+status.Parent = frame
+
+-- ===== Start Button =====
+local startBtn = Instance.new("TextButton")
+startBtn.Size = UDim2.new(0.4, 0, 0, 40)
+startBtn.Position = UDim2.new(0.075, 0, 0, 60)
+startBtn.Text = "START"
+startBtn.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+startBtn.TextColor3 = Color3.new(1,1,1)
+startBtn.Font = Enum.Font.GothamBold
+startBtn.TextSize = 14
+startBtn.Parent = frame
+Instance.new("UICorner", startBtn).CornerRadius = UDim.new(0, 10)
+
+-- ===== Stop Button =====
+local stopBtn = Instance.new("TextButton")
+stopBtn.Size = UDim2.new(0.4, 0, 0, 40)
+stopBtn.Position = UDim2.new(0.525, 0, 0, 60)
+stopBtn.Text = "STOP"
+stopBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+stopBtn.TextColor3 = Color3.new(1,1,1)
+stopBtn.Font = Enum.Font.GothamBold
+stopBtn.TextSize = 14
+stopBtn.Parent = frame
+Instance.new("UICorner", stopBtn).CornerRadius = UDim.new(0, 10)
+
+-- ===== Button Events =====
+startBtn.MouseButton1Click:Connect(function()
+    if StartRecord then
+        StartRecord()
+        status.Text = "STATUS | RECORDING"
+        status.TextColor3 = Color3.fromRGB(255, 100, 100)
+    end
+end)
+
+stopBtn.MouseButton1Click:Connect(function()
+    if StopRecord then
+        StopRecord()
+        status.Text = "STATUS | STOP"
+        status.TextColor3 = Color3.fromRGB(200, 200, 200)
+    end
+end)
+
+return gui
